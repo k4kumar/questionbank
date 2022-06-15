@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Quiz_Application.Services.Entities.Question>
+@{ 
+    ViewData["Title"] = "Question List";  
+}
+
+<style>
+    .display-text {
+        font-size: 20px !important;
+    }
+</style>
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <div style="text-align:right">
+            <a class="w3-button w3-white w3-border w3-border-green w3-round-large" asp-action="AddQuestion" asp-controller="Question" style="text-align:right; margin:10px 0px">Add Question</a>
+        </div>
+
+
+        <table class="w3-table-all">
+            <thead>
+                <tr>
+                    <th>Question List</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td class="display-text">@item.DisplayText</td>
+                    <td>
+                        <a class="w3-button w3-white w3-border w3-border-orange w3-round-large" asp-action="UpdateQuestion" asp-controller="Question" asp-route-id="@item.QuestionID">Update</a>
+                        <a class="w3-button w3-white w3-border w3-border-red w3-round-large" asp-action="DeleteConfirm" asp-controller="Question" asp-route-id="@item.QuestionID">Delete</a>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- End Page Container -->
+</div>
+<br />

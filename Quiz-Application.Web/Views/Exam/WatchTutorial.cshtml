@@ -1,0 +1,32 @@
+﻿@model Quiz_Application.Services.Entities.Exam
+@{ ViewData["Title"] = "Tutorials Page"; }
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <form class="w3-container row-container" asp-action="AddExam" asp-antiforgery="true" asp-controller="Exam">
+            <!-- Middle Column -->
+            <div class="w3-card-12">
+                <header class="w3-container w3-blue" style="text-align:right;">
+                    <h2>Exam Tutorial</h2>
+                </header>
+                <div class="w3-container w3-card w3-white" style="padding-top: 10px">
+
+                    <div class="text-center">
+                        <iframe class="iframe-video" src="@Model.TutorialLink" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <br />
+                        <hr />
+                        <a class="btn btn-success" asp-action="Details" asp-controller="Exam" asp-route-id="@Model.ExamID" title="Find out more">Find out more</a><br />
+                    </div>
+
+                </div>
+                <!-- End Middle Column -->
+            </div>
+        </form>
+
+    </div>
+    <!-- End Page Container -->
+</div>
+<br />

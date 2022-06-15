@@ -1,0 +1,63 @@
+﻿@model Quiz_Application.Services.Entities.Question
+@{ ViewData["Title"] = "Add Question Page"; }
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <form class="w3-container" asp-action="AddQuestion" asp-antiforgery="true" asp-controller="Question">
+            <!-- Middle Column -->
+            <div class="w3-card-12">
+                <header class="w3-container w3-blue" style="text-align:right">
+                    <h2>Question Input</h2>
+                </header>
+                <div class="w3-container w3-card w3-white">
+
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="QuestionType" class="control-label">Question Type</label>
+                        <select asp-for="QuestionType" class="w3-input w3-border w3-round">
+                            <option value="1" selected>MCQ Questions</option>
+                            <option value="2">True/False Questions</option>
+                        </select>
+                        <span asp-validation-for="QuestionType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="ExamID" class="control-label">Exam</label>
+                        <select asp-for="ExamID" class="w3-input w3-border w3-round" id="ddlExam"></select>
+                        <span asp-validation-for="ExamID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="DisplayText" class="control-label">Display Text</label>
+                        <input asp-for="DisplayText" class="w3-input w3-border w3-round" />
+                        <span asp-validation-for="DisplayText" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div>
+                        <button class="w3-button w3-block w3-blue"><i class="fa fa-check"></i> Save</button>
+                    </div>
+
+                </div>
+                <!-- End Middle Column -->
+            </div>
+        </form>
+
+    </div>
+    <!-- End Page Container -->
+</div>
+<br />
+
+@section Scripts{ 
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/api/Exams",
+            data: "{}",
+            success: function (data) {
+                var string = '<option value="-1">--- Please Select ---</option>';
+                for (var i = 0; i < data.length; i++) { string += '<option value="' + data[i].examID + '">' + data[i].name + '</option>'; }
+                $("#ddlExam").html(string);
+            }
+        });
+    </script>
+}

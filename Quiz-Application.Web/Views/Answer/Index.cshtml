@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Quiz_Application.Services.Entities.Answer>
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Answer List";
+    var userType = Context.Session.GetString("UserType").ToString(); 
+}
+
+<style>
+
+    .display-text {
+        font-size: 20px !important;
+    }
+</style>
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        @if (userType == "Admin")
+        {
+            <div style="text-align:right">
+                <a class="w3-button w3-white w3-border w3-border-green w3-round-large" asp-action="AddAnswer" asp-controller="Answer" style="text-align:right; margin:10px 0px">Add Answer</a>
+            </div>
+        }
+
+        <table class="w3-table-all">
+            <thead>
+                <tr>
+                    <th>Display Text</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="display-text">@item.DisplayText</td>
+                        <td>
+                            @if (userType == "Admin")
+                            {
+                                <a class="w3-button w3-white w3-border w3-border-red w3-round-large" asp-action="DeleteConfirm" asp-controller="Answer" asp-route-id="@item.Sl_No" asp- style="text-align:right; margin:10px 0px">Delete</a>
+                                <a class="w3-button w3-white w3-border w3-border-blue w3-round-large" asp-action="UpdateAnswer" asp-controller="Answer" asp-route-id="@item.Sl_No" asp- style="text-align:right; margin:10px 0px">Update</a>
+                            }
+                        </td>
+                    </tr>
+                 }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- End Page Container -->
+</div>
+<br />

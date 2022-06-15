@@ -1,0 +1,29 @@
+﻿@model Quiz_Application.Services.Entities.Answer
+@{ ViewData["Title"] = "Delete Answer?"; }
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <form class="w3-container" asp-action="Delete" asp-antiforgery="true" asp-route-id="@Model.Sl_No" asp-controller="Answer">
+            <!-- Middle Column -->
+            <div class="w3-card-12">
+                <div class="w3-panel w3-pale-green w3-bottombar w3-border-green w3-border">
+                    <p>
+                        Do you really want to delete the answer data?
+                    </p>
+                    <p>
+                        @Model.DisplayText
+                    </p>
+                    <p>
+                        <button class="w3-button w3-block w3-red"><i class="fa fa-check"></i> Delete</button>
+                        <button class="w3-button w3-block w3-red"><i class="fa fa-check"></i> Delete</button>
+                    </p>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!-- End Page Container -->
+</div>
