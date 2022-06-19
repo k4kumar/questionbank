@@ -58,7 +58,7 @@ namespace Quiz_Application.Web.Controllers
             try
             {
                 IEnumerable<Question> lst = await _question.GetQuestionList();
-                return Ok(lst);
+                return Ok(lst.ToList().OrderByDescending(e => e.QuestionID));
             }
             catch (Exception ex)
             {

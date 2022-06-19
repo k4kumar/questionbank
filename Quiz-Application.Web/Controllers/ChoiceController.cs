@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Quiz_Application.Web.Controllers
 {
+    [BasicAuthentication]
     public class ChoiceController : Controller
     {
         private readonly IChoice<Services.Entities.Choice> _choice;
@@ -23,6 +24,24 @@ namespace Quiz_Application.Web.Controllers
         {
             IEnumerable<Choice> lst = await _choice.GetChoiceList();
             return View(lst.OrderByDescending(e => e.ChoiceID));
+        }
+
+        [HttpGet]
+        [Route("~/api/Choice/GetAll")]
+        public async Task<IActionResult> Choices()
+        {
+            try
+            {
+                IEnumerable<Choice> lst = await _choice.GetChoiceList();
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+            finally
+            {
+            }
         }
 
         [HttpGet]
@@ -75,6 +94,28 @@ namespace Quiz_Application.Web.Controllers
         {
             Choice choice = await _choice.GetChoice(id);
             int output = await _choice.DeleteChoice(choice);
+            return RedirectToAction("Index", "Choice");
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> UpdateChoice(int id)
+        {
+            Choice choice = await _choice.GetChoice(id);
+            ViewBag.QuestionID = choice.QuestionID;
+            return View(choice);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateChoice(Choice model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await this._choice.UpdateChoice(model);
+
             return RedirectToAction("Index", "Choice");
         }
     }

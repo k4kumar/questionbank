@@ -1,0 +1,101 @@
+﻿@model Quiz_Application.Services.Entities.Answer
+@{ ViewData["Title"] = "Update Answer Page"; }
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:60px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <form class="w3-container" asp-action="UpdateAnswer" asp-antiforgery="true" asp-controller="Answer">
+            <!-- Middle Column -->
+            <div class="w3-card-12">
+                <header class="w3-container w3-blue" style="text-align:right">
+                    <h2>Answer Update</h2>
+                </header>
+                <div class="w3-container w3-card w3-white">
+                    <input asp-for="Sl_No" type="hidden" />
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="QuestionID" class="control-label">Question</label>
+                        <select asp-for="QuestionID" class="w3-input w3-border w3-round" id="ddlQuestion"></select>
+                        <span asp-validation-for="QuestionID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="ChoiceID" class="control-label">Choice</label>
+                        <select asp-for="ChoiceID" class="w3-input w3-border w3-round" id="ddlChoice"></select>
+                        <span asp-validation-for="ChoiceID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="DisplayText" class="control-label">Display Text</label>
+                        <input asp-for="DisplayText" class="w3-input w3-border w3-round" />
+                        <span asp-validation-for="DisplayText" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <button class="w3-button w3-block w3-blue"><i class="fa fa-check"></i> Update</button>
+                    </div>
+
+                </div>
+                <!-- End Middle Column -->
+            </div>
+        </form>
+
+    </div>
+    <!-- End Page Container -->
+</div>
+<br />
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        var questionId = '@ViewBag.QuestionID';
+        var choiceId = '@ViewBag.ChoiceID';
+        $.ajax({
+            type: "GET",
+            url: "/api/Questions/GetAll",
+            data: "{}",
+            success: function (data) {
+                var string = '<option value="-1">--- Please Select ---</option>';
+                for (var i = 0; i < data.length; i++) {
+                    string += '<option value="' + data[i].questionID + '">' + data[i].displayText + '</option>';
+
+                }
+                $("#ddlQuestion").html(string);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/api/Choice/GetAll",
+            data: "{}",
+            success: function (data) {
+                var string = '<option value="-1">--- Please Select ---</option>';
+                for (var i = 0; i < data.length; i++) {
+                    string += '<option value="' + data[i].choiceID + '">' + data[i].displayText + '</option>';
+
+                }
+                $("#ddlChoice").html(string);
+            }
+        });
+
+        $(document).ajaxStop(function () {
+            var ddlChoice = document.getElementById("ddlChoice");
+            var opts = ddlChoice.options.length;
+            for (var i = 0; i < opts; i++) {
+                if (ddlChoice.options[i].value == choiceId) {
+                    ddlChoice.options[i].selected = true;
+                    break;
+                }
+            }
+            var ddlQuestion = document.getElementById("ddlQuestion");
+            var opts = ddlQuestion.options.length;
+            for (var i = 0; i < opts; i++) {
+                if (ddlQuestion.options[i].value == questionId) {
+                    ddlQuestion.options[i].selected = true;
+                    break;
+                }
+            }
+        });
+
+    </script>
+
+}

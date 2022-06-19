@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Quiz_Application.Web.Controllers
 {
+    [BasicAuthentication]
     public class AnswerController : Controller
     {
         private readonly IAnswer<Services.Entities.Answer> _answer;
@@ -55,6 +56,29 @@ namespace Quiz_Application.Web.Controllers
         {
             Answer answer = await _answer.GetAnswer(id);
             int output = await _answer.DeleteAnswer(answer);
+            return RedirectToAction("Index", "Answer");
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> UpdateAnswer(int id)
+        {
+            Answer answer = await _answer.GetAnswer(id);
+            ViewBag.ChoiceID = answer.ChoiceID;
+            ViewBag.QuestionID = answer.QuestionID;
+            return View(answer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAnswer(Answer model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await this._answer.UpdateAnswer(model);
+
             return RedirectToAction("Index", "Answer");
         }
     }

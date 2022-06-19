@@ -78,67 +78,74 @@ namespace Quiz_Application.Services.Repository.Base
             {
                 string cert =null;
                 cert= @"<html>
-<head>
-<style type='text/css'>
-.outer-border {
-    width: 800px;
-    height: 650px;
-    padding: 20px;
-    text-align: center;
-    border: 10px solid #673AB7;
-    margin-left: 21%
-}
+    <head>
+        <style type='text/css'>
+            
+            body {
+                color: black;
+                display: table;
+                font-family: Georgia, serif;
+                font-size: 24px;
+                text-align: center;
+            }
+            .center{
+                text-align: center;
+            }
+            .container {
+                border: 20px solid tan;
+                width:1400px;
+                height: 800px;
+                display: table-cell;
+                vertical-align: middle;
+            }
+            .logo {
+                color: red;
+				font-size: 48px;
+            }
 
-.inner-dotted-border {
-    width: 750px;
-    height: 600px;
-    padding: 20px;
-    text-align: center;
-    border: 5px solid #673AB7;
-    border-style: dotted
-}
+            .marquee {
+                color: tan;
+                font-size: 48px;
+                margin: 20px;
+            }
+            .assignment {
+                margin: 20px;
+            }
+            .person {
+                border-bottom: 2px solid black;
+                font-size: 32px;
+                font-style: italic;
+                margin: 20px auto;
+                width: 400px;
+            }
+            .reason {
+                margin: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container center'>
+            <div class='logo'>
+                Rupali Bank Ltd.
+            </div>
 
-.certification {
-    font-size: 50px;
-    font-weight: bold;
-    color: #663ab7
-}
+            <div class='marquee'>
+                Certificate of Completion
+            </div>
 
-.certify {
-    font-size: 25px
-}
+            <div class='assignment'>
+                This certificate is presented to
+            </div>
 
-.name {
-    font-size: 30px;
-    color: green
-}
-
-.fs-30 {
-    font-size: 30px
-}
-
-.fs-20 {
-    font-size: 20px
-}
-</style>
-</head>
-<body>
-<div class='outer-border'>
-    <div class='inner-dotted-border'><br> 
-	<span><img src='https://www.citypng.com/public/uploads/preview/hd-gold-black-certificate-logo-transparent-png-31625761576hadwkhbj6t.png' alt='avatar' class='w3-left w3-circle w3-margin-right' style='width:100px'></span>
-	<br><br><br>
-	<span class='certification'>Certificate of Completion</span> 
-	<br><br> 
-	<span class='certify'><i>This is to certify that</i></span> 
-	<br><br> <span class='name'><b>"+ _candidate.Name + @"</b></span><br />
-	<br /> <span class='certify'><i>has successfully completed the certification</i></span>
-	<br /><br /> <span class='fs-30'>"+argRpt.Exam+@"</span> <br /><br /> 
-	<span class='fs-20'>with score of <b>"+argRpt.Score+@"</b></span>
-	<br /><br /><br /> 
-	<span class='certify'><i>dated</i></span><br> <span class='fs-30'>"+argRpt.Date+@"</span>
-    </div>
-</div>
-</body>
+            <div class='person'>
+                " + _candidate.Name + @"
+            </div>
+            <div class='reason'>
+                For " + argRpt.Exam + @" <br/>
+                with the score of <b>" + argRpt.Score + @"</b>
+            </div>
+        </div>
+    </body>
 </html>";
                 return cert.ToString();
             }

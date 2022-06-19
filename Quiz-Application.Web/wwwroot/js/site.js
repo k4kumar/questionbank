@@ -24,7 +24,7 @@ $(document).ready(function () {
 
     $('#ddlExam').prop('disabled', false);
     $('#btnStart').prop('disabled', false);
-    $('#btnSubmit').prop('disabled', false);
+    $('#btnSubmit').prop('disabled', true);
     $('#btnSave').prop('disabled', true);
     $('#eqMain button.w3-left').prop('disabled', true);
     $('#eqMain button.w3-right').prop('disabled', true);
@@ -151,14 +151,14 @@ $(document).ready(function () {
             for (var i in objData.questions[index].options) {
                 if (!$.isEmptyObject(obj)) {
                     if (obj.SelectedOption == objData.questions[index].options[i].optionID) {
-                        Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + objData.questions[index].options[i].optionID + "' checked><label> " + objData.questions[index].options[i].option + "</label><br/>";
+                        Ostring = Ostring + "<input class='w3-radio' type='radio' id='" + objData.questions[index].options[i].optionID + "'  name='option' value='" + objData.questions[index].options[i].optionID + "' checked><label for = '" + objData.questions[index].options[i].optionID + "' style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
                     }
                     else {
-                        Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + objData.questions[index].options[i].optionID + "'><label> " + objData.questions[index].options[i].option + "</label><br/>";
+                        Ostring = Ostring + "<input class='w3-radio' type='radio' id='" + objData.questions[index].options[i].optionID + "' name='option' value='" + objData.questions[index].options[i].optionID + "'><label for = '" + objData.questions[index].options[i].optionID + "' style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
                     }
                 }
                 else {
-                    Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + objData.questions[index].options[i].optionID + "'><label> " + objData.questions[index].options[i].option + "</label><br/>";
+                    Ostring = Ostring + "<input class='w3-radio' type='radio' id='" + objData.questions[index].options[i].optionID + "' name='option' value='" + objData.questions[index].options[i].optionID + "'><label for = '" + objData.questions[index].options[i].optionID + "' style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
                 }
             }
             Ostring = Ostring + "</div>";
@@ -192,14 +192,14 @@ $(document).ready(function () {
                 //console.log(i, data.questions[0].options[i]);   
                 if (!$.isEmptyObject(obj)) {
                     if (obj.SelectedOption == objData.questions[index].options[i].optionID) {
-                        Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + objData.questions[index].options[i].optionID + "' checked><label style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
+                        Ostring = Ostring + "<input class='w3-radio' type='radio' id='" + objData.questions[index].options[i].optionID + "' name='option' value='" + objData.questions[index].options[i].optionID + "' checked><label for = '" + objData.questions[index].options[i].optionID + "' style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
                     }
                     else {
-                        Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + objData.questions[index].options[i].optionID + "'><label style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
+                        Ostring = Ostring + "<input class='w3-radio' type='radio' id='" + objData.questions[index].options[i].optionID + "' name='option' value='" + objData.questions[index].options[i].optionID + "'><label for = '" + objData.questions[index].options[i].optionID + "' style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
                     }
                 }
                 else {
-                    Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + objData.questions[index].options[i].optionID + "'><label style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
+                    Ostring = Ostring + "<input class='w3-radio' type='radio' id='" + objData.questions[index].options[i].optionID + "' name='option' value='" + objData.questions[index].options[i].optionID + "'><label for = '" + objData.questions[index].options[i].optionID + "' style='font-size:20px'> " + objData.questions[index].options[i].option + "</label><br/>";
                 }
             }
             Ostring = Ostring + "</div>";
@@ -208,6 +208,7 @@ $(document).ready(function () {
             $('#eqMain button.w3-left').prop('disabled', false);
             if (index == qIndex - 1) {
                 $('#eqMain button.w3-right').prop('disabled', true);
+                $("#btnSubmit").prop('disabled', false);
             }
         }
     });
@@ -368,7 +369,7 @@ $(document).ready(function () {
                 AnswerID = data.questions[0].answer.optionID;
                 for (var i in data.questions[0].options) {
                     //console.log(i, data.questions[0].options[i]);
-                    Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' value='" + data.questions[0].options[i].optionID + "'><label style='font-size:20px'> " + data.questions[0].options[i].option + "</label><br/>";
+                    Ostring = Ostring + "<input class='w3-radio' type='radio' name='option' id='" + objData.questions[0].options[i].optionID + "' value='" + data.questions[0].options[i].optionID + "'><label for = '" + objData.questions[0].options[i].optionID + "' style='font-size:20px'> " + data.questions[0].options[i].option + "</label><br/>";
                 }
                 Ostring = Ostring + "</div>";
                 //console.log(Ostring);
