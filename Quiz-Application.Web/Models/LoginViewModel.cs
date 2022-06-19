@@ -10,6 +10,11 @@ namespace Quiz_Application.Web.Models
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
-       
+
+        public string HDEmail { get; set; }
+        // hidden fields for username
+        public string HDPass { get; set; }
+        // hidden fields for password
+
     }
 }

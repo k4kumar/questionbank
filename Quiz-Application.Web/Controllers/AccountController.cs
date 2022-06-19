@@ -10,6 +10,7 @@ using Quiz_Application.Web.Extensions;
 using Quiz_Application.Web.Enums;
 using Quiz_Application.Services.Entities;
 using Quiz_Application.Services.Repository.Interfaces;
+using Quiz_Application.Web.Library.encryption;
 
 
 namespace Quiz_Application.Web.Controllers
@@ -116,35 +117,39 @@ namespace Quiz_Application.Web.Controllers
                 string _Controller = string.Empty;
                 string value = Convert.ToString(HttpContext.Session.GetString("AuthenticatedUser"));
 
-                if (ModelState.IsValid)
+                if (string.IsNullOrEmpty(value))
                 {
-                    if (string.IsNullOrEmpty(value))
+                    var mail = AESEncrytDecry.DecryptStringAES(objCollection.HDEmail);
+                    var password = AESEncrytDecry.DecryptStringAES(objCollection.HDPass);
+                    objCollection.Email = mail;
+                    objCollection.Password = password;
+
+
+                    IQueryable<Services.Entities.Candidate> candidate = await _candidate.SearchCandidate(x => x.Email.Equals(mail) && x.Password.Equals(password.EncodeBase64()));
+                    if (candidate.Any())
                     {
-                        IQueryable<Services.Entities.Candidate> candidate = await _candidate.SearchCandidate(x => x.Email.Equals(objCollection.Email) && x.Password.Equals(objCollection.Password.EncodeBase64()));
-                        if (candidate.Any())
-                        {
-                            Services.Entities.Candidate _candidate = new Services.Entities.Candidate();
-                            _candidate = candidate.FirstOrDefault();
-                            _candidate.Password = _candidate.Password.EncodeBase64();
-                            HttpContext.Session.SetObjectAsJson("AuthenticatedUser", _candidate);
-                            HttpContext.Session.SetString("UserType", _candidate.CandidateType);
-                            
-                            _Controller = "Home";
-                            _Action = "Index";
-                        }
-                        else
-                        {
-                            TempData["Message"] = "Invalid User.";
-                            _Controller = "Account";
-                            _Action = "Login";
-                        }
+                        Services.Entities.Candidate _candidate = new Services.Entities.Candidate();
+                        _candidate = candidate.FirstOrDefault();
+                        _candidate.Password = _candidate.Password.EncodeBase64();
+                        HttpContext.Session.SetObjectAsJson("AuthenticatedUser", _candidate);
+                        HttpContext.Session.SetString("UserType", _candidate.CandidateType);
+
+                        _Controller = "Home";
+                        _Action = "Index";
                     }
                     else
                     {
+                        TempData["Message"] = "Invalid User.";
                         _Controller = "Account";
                         _Action = "Login";
                     }
                 }
+                else
+                {
+                    _Controller = "Account";
+                    _Action = "Login";
+                }
+
                 return RedirectToAction(_Action, _Controller, ViewBag.Alert);
             }
             catch (Exception ex)
@@ -202,7 +207,7 @@ namespace Quiz_Application.Web.Controllers
                     objCandidate.Password = objCollection.Password.EncodeBase64();
                     objCandidate.ModifiedBy = objCollection.Email;
                     objCandidate.ModifiedOn = DateTime.Now;
-                   
+
                     i = await _candidate.UpdateCandidate(objCandidate);
 
                     if (i > 0)

@@ -50,6 +50,7 @@ namespace Quiz_Application.Web
             }
             else
             {
+                //app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseSession();
