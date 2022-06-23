@@ -32,6 +32,12 @@ namespace Quiz_Application.Services
                 eb.HasNoKey();
                 eb.ToView(null);
             });
+
+            modelBuilder.Entity<QuizReportDetails>(eb =>
+            {
+                eb.HasNoKey();
+                eb.ToView(null);
+            });
         }
     }
 }

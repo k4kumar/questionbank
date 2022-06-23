@@ -70,6 +70,22 @@ namespace Quiz_Application.Services.Repository.Base
             {
             }
         }
+
+        public async Task<IEnumerable<QuizReportDetails>> ScoreReportDetails(ReqReport argRpt)
+        {
+            try
+            {
+                List<QuizReportDetails> obj = await _dbContext.Set<QuizReportDetails>().FromSqlRaw(@"EXEC GetReportDetails {0},{1},{2}", argRpt.ExamID, argRpt.CandidateID, argRpt.SessionID).ToListAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+            finally
+            {
+            }
+        }
         public async Task<string> GetCertificateString(ReqCertificate argRpt)
         {
             Candidate _candidate =await _dbContext.Candidate.Where(e => e.Candidate_ID == argRpt.CandidateID.ToString()).FirstOrDefaultAsync();          

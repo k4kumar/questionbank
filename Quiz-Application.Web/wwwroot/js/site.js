@@ -301,6 +301,8 @@ $(document).ready(function () {
         Status = $(this).closest("tr").find('td:eq(6)').text();
         $.post('/api/Report/', { argRpt: request },
             function (data) {
+                var img = document.getElementById("imgResult");
+                img.style.display = 'block';
                 objReport = data;
                 $('div#eqScore h3').html(data[0].exam + ' Test');
                 $('div#eqScore .w3-container p:eq(0)').html('<strong>Candidate ID:</strong> ' + data[0].candidateID);
@@ -313,6 +315,51 @@ $(document).ready(function () {
                     Score = null;
                     objReport = null;
                     $("#eqScore").children().prop('disabled', true);
+                }
+            });
+    });
+
+    $('.btnDetails').click(function () {
+        var request = {
+            ExamID: $(this).closest("tr").find('td:eq(2)').text(),
+            CandidateID: $('#hdnCandidateID').val(),
+            SessionID: $(this).closest("tr").find('td:eq(1)').text()
+        };
+        Score = $(this).closest("tr").find('td:eq(4)').text();
+        Status = $(this).closest("tr").find('td:eq(6)').text();
+        $.post('/api/ExamDetails/', { argRpt: request },
+            function (data) {
+                var img = document.getElementById("imgResult");
+                img.style.display = 'none';
+                //$("#eqScore").html("");
+                objReport = data;
+                $('div#eqScore h3').html(data[0].exam + ' Test');
+                $('div#eqScore .w3-container p:eq(0)').html('<strong>Candidate ID:</strong> ' + data[0].candidateID);
+                $('div#eqScore .w3-container span').html('<strong>Date:</strong> ' + data[0].date);
+                if (Status == "1") {
+                    $("#eqScore").children().prop('disabled', false);
+                }
+                else {
+                    Score = null;
+                    objReport = null;
+                    $("#eqScore").children().prop('disabled', true);
+                }
+                var result = "";
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    //html
+                    //insertAdjacentHTML
+                    if (data[i].answer == 'Wrong') {
+                        result += "<h5 class='wrong'>" + data[i].displayText + "</h5>";
+                    } else {
+                        result += "<h5 class='correct' style='color:green'>" + data[i].displayText + "</h5>";
+                    }
+                    
+                }
+                $("div#eqScore .w3-container h5").html(result);
+                var wrongAnswers = document.getElementsByClassName("wrong");
+                for (var i = 0; i < wrongAnswers.length; i++) {
+                    wrongAnswers[i].style.color = "red";
                 }
             });
     });

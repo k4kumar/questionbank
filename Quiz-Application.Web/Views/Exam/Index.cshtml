@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Exam List";
-    var userType = Context.Session.GetString("UserType").ToString(); 
+    var userType = Context.Session.GetString("UserType").ToString();
 }
 
 <!-- Page Container -->
@@ -11,11 +11,10 @@
     <div class="w3-row">
         @if (userType == "Admin")
         {
-            <div style="text-align:right">
-                <a class="w3-button w3-white w3-border w3-border-green w3-round-large" asp-action="AddExam" asp-controller="Exam" style="text-align:right; margin:10px 0px">Add Exam</a>
-            </div>
+        <div style="text-align:right">
+            <a class="w3-button w3-white w3-border w3-border-green w3-round-large" asp-action="AddExam" asp-controller="Exam" style="text-align:right; margin:10px 0px">Add Exam</a>
+        </div>
         }
-
         <table class="w3-table-all">
             <thead>
                 <tr>
@@ -29,20 +28,22 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.FullMarks</td>
-                        <td>@item.Duration</td>
-                        <td>
-                            @if (userType == "Admin")
-                            {
-                                <a class="w3-button w3-white w3-border w3-border-red w3-round-large" asp-action="DeleteConfirm" asp-controller="Exam" asp-route-id="@item.ExamID" asp- style="text-align:right; margin:10px 0px">Delete</a>
-                                <a class="w3-button w3-white w3-border w3-border-blue w3-round-large" asp-action="UpdateExam" asp-controller="Exam" asp-route-id="@item.ExamID" asp- style="text-align:right; margin:10px 0px">Update</a>
-                            }
-                            <a class="w3-button w3-white w3-border w3-border-green w3-round-large" asp-action="WatchTutorial" asp-controller="Exam" asp-route-id="@item.ExamID" title="Watch Tutorial">Watch Tutorial</a>
-                            <a class="w3-button w3-white w3-border w3-border-orange w3-round-large" asp-action="Details" asp-controller="Exam" asp-route-id="@item.ExamID" title="Find out more">Study</a><br />
-                        </td>
-                    </tr>}
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.FullMarks</td>
+                    <td>@item.Duration</td>
+                    <td>
+                        @if (userType == "Admin")
+                        {
+                            <a class="w3-button w3-white w3-border w3-border-red w3-round-large" asp-action="DeleteConfirm" asp-controller="Exam" asp-route-id="@item.ExamID" asp- style="text-align:right; margin:10px 0px">Delete</a>
+                            <a class="w3-button w3-white w3-border w3-border-blue w3-round-large" asp-action="UpdateExam" asp-controller="Exam" asp-route-id="@item.ExamID" asp- style="text-align:right; margin:10px 0px">Update</a>
+                        }
+                        <a class="w3-button w3-white w3-border w3-border-brown w3-round-large" title="Presentation" onclick="displayIframe()">Powerpoint Slides</a>
+                        <a class="w3-button w3-white w3-border w3-border-green w3-round-large" asp-action="WatchTutorial" asp-controller="Exam" asp-route-id="@item.ExamID" title="Watch Tutorial">Watch Tutorial</a>
+                        <a class="w3-button w3-white w3-border w3-border-orange w3-round-large" asp-action="Details" asp-controller="Exam" asp-route-id="@item.ExamID" title="Find out more">Study</a><br />
+                    </td>
+                </tr>
+                }
 
             </tbody>
         </table>
@@ -50,3 +51,13 @@
     <!-- End Page Container -->
 </div>
 <br />
+
+@section Scripts{
+    <script>
+        function displayIframe() {
+            var win = window.open();
+            win.document.write("<iframe src='https://www.slideshare.net/slideshow/embed_code/key/4R3HTP2Q2baMbK?hostedIn=slideshare&page=upload' width='1000' height='700' frameborder='0' marginwidth='0' marginheight='0' scrolling='no'></iframe>");
+        }
+    </script>
+    
+}

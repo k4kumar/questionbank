@@ -14,6 +14,8 @@ namespace Quiz_Application.Services.Entities
         public int QuestionID { get; set; }
         public int QuestionType { get; set; }  //MCQ-1      
         public string DisplayText { get; set; }
+        public string Reference { get; set; }
+        public string Suggestions { get; set; }
         public int ExamID { get; set; }
     }
 }

@@ -37,7 +37,17 @@ namespace Quiz_Application.Services.Entities
         public string Exam { get; set; }
         public string Date { get; set; }
         public string Message { get; set; }
-    }    
+    }
+    public class QuizReportDetails
+    {
+        public int CandidateID { get; set; }
+        public string SessionID { get; set; }
+        public int ExamID { get; set; }
+        public string Exam { get; set; }
+        public string DisplayText { get; set; }
+        public string Answer { get; set; }
+        public string Date { get; set; }
+    }
     public class ReqReport
     {
         public int ExamID { get; set; }

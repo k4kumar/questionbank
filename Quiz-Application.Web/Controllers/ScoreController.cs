@@ -52,6 +52,24 @@ namespace Quiz_Application.Web.Controllers
         }
 
         [HttpPost]
+        [Route("~/api/ExamDetails")]
+        public async Task<IActionResult> ExamDetails(ReqReport argRpt)
+        {
+            try
+            {
+                IEnumerable<QuizReportDetails> lst = await _result.ScoreReportDetails(argRpt);
+                return Ok(lst.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+            finally
+            {
+            }
+        }
+
+        [HttpPost]
         [Route("~/api/Report")]
         public async Task<IActionResult> Report(ReqReport argRpt)
         {

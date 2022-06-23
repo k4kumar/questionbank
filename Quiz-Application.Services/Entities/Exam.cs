@@ -22,6 +22,9 @@ namespace Quiz_Application.Services.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Duration { get; set; }
         public string Details { get; set; }
+        public string YoutubeTutorialLink { get; set; }
+        public string PresentationLink { get; set; }
+        public string PDFLink { get; set; }
         public string TutorialLink { get; set; }
     }
 }

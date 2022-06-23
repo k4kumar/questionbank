@@ -11,6 +11,7 @@ namespace Quiz_Application.Services.Repository.Interfaces
     {
         Task<IEnumerable<QuizAttempt>> GetAttemptHistory(string argCandidateID);
         Task<IEnumerable<QuizReport>> ScoreReport(ReqReport argRpt);
+        Task<IEnumerable<QuizReportDetails>> ScoreReportDetails (ReqReport argRpt);
         Task<int> AddResult(List<TEntity> entity);
         Task<string> GetCertificateString(ReqCertificate argRpt);
     }
