@@ -9,6 +9,7 @@ namespace Quiz_Application.Services.Repository.Interfaces
 {
     public interface IQuestion<TEntity>
     {
+        public int BulkQuestionEntry();
         Task<TEntity> GetQuestion(int QuestionID);
         Task<QnA> GetQuestionList(int ExamID);
         Task<IEnumerable<TEntity>> GetQuestionList();

@@ -26,6 +26,10 @@ namespace Quiz_Application.Services.Repository.Base
         {
             return await _dbSet.FindAsync(id);
         }
+        public Exam GetExam(string examName)
+        {
+            return _dbContext.Exam.FirstOrDefault(e=> e.Name.ToLower().Equals(examName));
+        }
         public async Task<IQueryable<TEntity>> SearchExam(Expression<Func<TEntity, bool>> search = null)
         {
             IQueryable<TEntity> query=_dbSet;

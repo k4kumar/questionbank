@@ -113,10 +113,12 @@ $(document).ready(function () {
            $.get('/api/Exam/', { ExamID: ExmID },
                function (data) {
                    Duration = data.duration;
+                   console.log("Duration:" + Duration);
                    StartTimer(Duration, checkTime);
                    StartRecord();
                    PopulateQuestions(ExmID);                   
-            });
+               });
+            $('#btnSubmit').prop('disabled', false);
         }
         else           
             $.alert({
@@ -208,7 +210,6 @@ $(document).ready(function () {
             $('#eqMain button.w3-left').prop('disabled', false);
             if (index == qIndex - 1) {
                 $('#eqMain button.w3-right').prop('disabled', true);
-                $("#btnSubmit").prop('disabled', false);
             }
         }
     });
@@ -427,7 +428,7 @@ $(document).ready(function () {
 
     function StartTimer(Duration, checkTime) {
         var deadline = new Date();
-        deadline.setHours(deadline.getHours() + Duration);
+        deadline.setMinutes(deadline.getMinutes() + Duration);
         if (checkTime.length== 0) {
             var x = setInterval(function () {
                 var now = new Date().getTime();

@@ -7,6 +7,12 @@ using Quiz_Application.Web.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.IO;
+using System.Data;
+using System.Data.OleDb;
+using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Http;
 
 namespace Quiz_Application.Web.Controllers
 {
@@ -103,6 +109,111 @@ namespace Quiz_Application.Web.Controllers
             await this._question.UpdateQuestion(model);
 
             return RedirectToAction("Index", "Question");
+        }
+
+
+        [HttpGet]
+        public IActionResult BulkQuestion()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcelFile(IFormFile FormFile)
+        {
+            
+            //get file name
+            var filename = ContentDispositionHeaderValue.Parse(FormFile.ContentDisposition).FileName.Trim('"');
+            
+            //get path
+            var MainPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads");
+
+            //create directory "Uploads" if it doesn't exists
+            if (!Directory.Exists(MainPath))
+            {
+                Directory.CreateDirectory(MainPath);
+            }
+
+            //get file path 
+            var filePath = Path.Combine(MainPath, FormFile.FileName);
+            using (System.IO.Stream stream = new FileStream(filePath, FileMode.Create))
+            {
+                await FormFile.CopyToAsync(stream);
+            }
+
+            //get extension
+            string extension = Path.GetExtension(filename);
+
+
+            string conString = string.Empty;
+
+            switch (extension)
+            {
+                case ".xls": //Excel 97-03.
+                    conString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HDR=YES'";
+                    break;
+                case ".xlsx": //Excel 07 and above.
+                    conString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HDR=YES'";
+                    break;
+            }
+
+            DataTable dt = new DataTable();
+            conString = string.Format(conString, filePath);
+
+            using (OleDbConnection connExcel = new OleDbConnection(conString))
+            {
+                using (OleDbCommand cmdExcel = new OleDbCommand())
+                {
+                    using (OleDbDataAdapter odaExcel = new OleDbDataAdapter())
+                    {
+                        cmdExcel.Connection = connExcel;
+
+                        //Get the name of First Sheet.
+                        connExcel.Open();
+                        DataTable dtExcelSchema;
+                        dtExcelSchema = connExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                        string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                        connExcel.Close();
+
+                        //Read Data from First Sheet.
+                        connExcel.Open();
+                        cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                        odaExcel.SelectCommand = cmdExcel;
+                        odaExcel.Fill(dt);
+                        connExcel.Close();
+                    }
+                }
+            }
+            //your database connection string
+            conString = @"Server=DESKTOP-CSC01;Database=rblexamdb;Trusted_Connection=True;";
+
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
+                {
+                    //Set the database table name.
+                    sqlBulkCopy.DestinationTableName = "dbo.QuestionBulk";
+
+                    // Map the Excel columns with that of the database table, this is optional but good if you do
+                    sqlBulkCopy.ColumnMappings.Add("Exam", "Exam");
+                    sqlBulkCopy.ColumnMappings.Add("DisplayText", "DisplayText");
+                    sqlBulkCopy.ColumnMappings.Add("Choice1", "Choice1");
+                    sqlBulkCopy.ColumnMappings.Add("Choice2", "Choice2");
+                    sqlBulkCopy.ColumnMappings.Add("Choice3", "Choice3");
+                    sqlBulkCopy.ColumnMappings.Add("Choice4", "Choice4");
+                    sqlBulkCopy.ColumnMappings.Add("Answer", "Answer");
+
+                    con.Open();
+                    sqlBulkCopy.WriteToServer(dt);
+                    con.Close();
+                }
+            }
+
+            _question.BulkQuestionEntry();
+
+            return RedirectToAction("Index", "Question");
+
         }
     }
 }

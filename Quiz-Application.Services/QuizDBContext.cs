@@ -18,6 +18,7 @@ namespace Quiz_Application.Services
         public virtual DbSet<Choice> Choice { get; set; }
         public virtual DbSet<Answer> Answer { get; set; }
         public virtual DbSet<Result> Result { get; set; }
+        public virtual DbSet<QuestionBulk> QuestionBulk { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

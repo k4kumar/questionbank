@@ -118,5 +118,22 @@ namespace Quiz_Application.Services.Repository.Base
             return output;
         }
 
+        public int BulkQuestionEntry()
+        {
+            try
+            {
+                int result = 0;
+                result = _dbContext.Database.ExecuteSqlRaw("Execute BulkQuestionEntry");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+            finally
+            {
+            }
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace Quiz_Application.Services.Repository.Interfaces
     {
         Task<IEnumerable<TEntity>> GetExamList();
         Task<TEntity> GetExam(int id);
+        Exam GetExam(string examName);
         Task<IQueryable<TEntity>> SearchExam(Expression<Func<TEntity, bool>> search = null);
         Task<int> AddExam(TEntity entity);
         Task<int> UpdateExam(TEntity entity);

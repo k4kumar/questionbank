@@ -25,14 +25,32 @@
                         <span asp-validation-for="FullMarks" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding:10px">
-                        <label asp-for="Duration" class="control-label">Duration</label>
+                        <label asp-for="Duration" class="control-label">Duration (Minutes)</label>
                         <input asp-for="Duration" class="w3-input w3-border w3-round" />
                         <span asp-validation-for="Duration" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding:10px">
-                        <label asp-for="TutorialLink" class="control-label">Tutorial Link</label>
-                        <input asp-for="TutorialLink" class="w3-input w3-border w3-round" />
+                        <label asp-for="YoutubeTutorialLink" class="control-label">Youtube Tutorial Link</label>
+                        <input asp-for="YoutubeTutorialLink" class="w3-input w3-border w3-round" />
+                        <span asp-validation-for="YoutubeTutorialLink" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="TutorialLink" class="control-label">Other Tutorial Link</label>
+                        @*<textarea asp-for="StudyTopics" class="form-control" name="editor" />*@
+                        <textarea asp-for="TutorialLink" class="w3-input w3-border w3-round"></textarea>
                         <span asp-validation-for="TutorialLink" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="PresentationLink" class="control-label">Presentation File Link</label>
+                        @*<textarea asp-for="StudyTopics" class="form-control" name="editor" />*@
+                        <textarea asp-for="PresentationLink" class="w3-input w3-border w3-round"></textarea>
+                        <span asp-validation-for="PresentationLink" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="PDFLink" class="control-label">PDF File Upload</label>
+                        @*<textarea asp-for="StudyTopics" class="form-control" name="editor" />*@
+                        <textarea asp-for="PDFLink" class="w3-input w3-border w3-round"></textarea>
+                        <span asp-validation-for="PDFLink" class="text-danger"></span>
                     </div>
                     <div class="form-group" style="padding:10px">
                         <label asp-for="Details" class="control-label">Study Topic</label>
@@ -40,7 +58,6 @@
                         <textarea asp-for="Details" class="editor w3-input w3-border w3-round"></textarea>
                         <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
-
                     <br />
                     <div>
                         <button class="w3-button w3-block w3-blue"><i class="fa fa-check"></i> Save</button>

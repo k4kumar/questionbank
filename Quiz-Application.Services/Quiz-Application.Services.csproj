@@ -5,6 +5,10 @@
     <RootNamespace>Quiz_Application.Services</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Repository\Candidate\**" />
     <Compile Remove="Repository\Exam\**" />

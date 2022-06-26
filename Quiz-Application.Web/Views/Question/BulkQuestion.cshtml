@@ -1,0 +1,35 @@
+﻿@model Quiz_Application.Services.Entities.QuestionBulk
+@{ ViewData["Title"] = "Bulk Question Upload"; }
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <!-- Left Column -->
+        <form class="w3-container" asp-action="ImportExcelFile" method="post" asp-controller="Question" enctype="multipart/form-data">
+            <!-- Middle Column -->
+            <div class="w3-card-12">
+                <header class="w3-container w3-blue" style="text-align:right">
+                    <h2>Bulk Question Upload</h2>
+                </header>
+                <div class="w3-container w3-card w3-white">
+
+                    <div class="form-group" style="padding:10px">
+                        <label asp-for="DisplayText" class="control-label">Select File</label>
+                        <input type="file" name="FormFile" id="FormFile" class="w3-input w3-border w3-round">
+                        <span asp-validation-for="DisplayText" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div>
+                        <button class="w3-button w3-block w3-blue"><i class="fa fa-check"></i> Upload</button>
+                    </div>
+
+                </div>
+                <!-- End Middle Column -->
+            </div>
+        </form>
+
+    </div>
+    <!-- End Page Container -->
+</div>
+<br />
