@@ -6,12 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DinkToPdf.Contracts;
-using DinkToPdf;
+using WkHtmlToPdfDotNet;
 using Quiz_Application.Web.Extensions;
 using Quiz_Application.Web.Authentication;
 using Quiz_Application.Services.Entities;
 using Quiz_Application.Services.Repository.Interfaces;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace Quiz_Application.Web.Controllers
 {

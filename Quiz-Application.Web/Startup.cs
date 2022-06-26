@@ -12,9 +12,8 @@ using Quiz_Application.Services.Repository;
 using Quiz_Application.Web.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using DinkToPdf.Contracts;
-using DinkToPdf;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace Quiz_Application.Web
 {
