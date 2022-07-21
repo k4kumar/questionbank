@@ -48,10 +48,14 @@
                     </div>
                     <div class="form-group" style="padding:10px">
                         <label asp-for="PDFLink" class="control-label">PDF File Upload</label>
-                        @*<textarea asp-for="StudyTopics" class="form-control" name="editor" />*@
-                        <textarea asp-for="PDFLink" class="w3-input w3-border w3-round"></textarea>
-                        <span asp-validation-for="PDFLink" class="text-danger"></span>
+                        <input class="w3-input w3-border w3-round" type="file" name="PDFFile" multiple />
                     </div>
+                    <!--<div class="form-group" style="padding:10px">
+                        <label asp-for="PDFLink" class="control-label">PDF File Upload</label>-->
+                        @*<textarea asp-for="StudyTopics" class="form-control" name="editor" />*@
+                        <!--<textarea asp-for="PDFLink" class="w3-input w3-border w3-round"></textarea>
+                        <span asp-validation-for="PDFLink" class="text-danger"></span>
+                    </div>-->
                     <div class="form-group" style="padding:10px">
                         <label asp-for="Details" class="control-label">Study Topic</label>
                         @*<textarea asp-for="StudyTopics" class="form-control" name="editor" />*@

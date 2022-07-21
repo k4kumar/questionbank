@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Quiz_Application.Web.Authentication;
 using Quiz_Application.Services.Entities;
 using Quiz_Application.Services.Repository.Interfaces;
-
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace Quiz_Application.Web.Controllers
 {    
@@ -144,12 +145,35 @@ namespace Quiz_Application.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddExam(Exam model)
+        public async Task<IActionResult> AddExam(Exam model, Microsoft.AspNetCore.Http.IFormFile FormFile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+
+            //get file name
+            var filename = ContentDispositionHeaderValue.Parse(FormFile.ContentDisposition).FileName.Trim('"');
+
+            //get path
+            var MainPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads");
+
+            //create directory "Uploads" if it doesn't exists
+            if (!Directory.Exists(MainPath))
+            {
+                Directory.CreateDirectory(MainPath);
+            }
+
+            // get file path
+            var filePath = Path.Combine(MainPath, FormFile.FileName);
+            using (System.IO.Stream stream = new FileStream(filePath, FileMode.Create))
+            {
+                await FormFile.CopyToAsync(stream);
+            }
+
+            model.PDFLink = filePath;
+
+
             await this._exam.AddExam(model);
 
             return RedirectToAction("Index", "Home");
@@ -192,12 +216,33 @@ namespace Quiz_Application.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateExam(Exam model)
+        public async Task<IActionResult> UpdateExam(Exam model, Microsoft.AspNetCore.Http.IFormFile FormFile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+
+            //get file name
+            var filename = ContentDispositionHeaderValue.Parse(FormFile.ContentDisposition).FileName.Trim('"');
+
+            //get path
+            var MainPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads");
+
+            //create directory "Uploads" if it doesn't exists
+            if (!Directory.Exists(MainPath))
+            {
+                Directory.CreateDirectory(MainPath);
+            }
+
+            // get file path
+            var filePath = Path.Combine(MainPath, FormFile.FileName);
+            using (System.IO.Stream stream = new FileStream(filePath, FileMode.Create))
+            {
+                await FormFile.CopyToAsync(stream);
+            }
+
+            model.PDFLink = filePath;
 
             await this._exam.UpdateExam(model);
 

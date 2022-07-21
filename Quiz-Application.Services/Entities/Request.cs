@@ -45,6 +45,7 @@ namespace Quiz_Application.Services.Entities
         public int ExamID { get; set; }
         public string Exam { get; set; }
         public string DisplayText { get; set; }
+        public string Reference { get; set; }
         public string Answer { get; set; }
         public string Date { get; set; }
     }

@@ -351,9 +351,10 @@ $(document).ready(function () {
                     //html
                     //insertAdjacentHTML
                     if (data[i].answer == 'Wrong') {
-                        result += "<h5 class='wrong'>" + data[i].displayText + "</h5>";
+                        result += "<h5 class='wrong' title='" + data[i].Reference +"'>" + data[i].displayText + "</h5>";
                     } else {
-                        result += "<h5 class='correct' style='color:green'>" + data[i].displayText + "</h5>";
+                        console.log(data[i].Reference);
+                        result += "<h5 class='correct' style='color:green' title='" + data[i].reference+"'>" + data[i].displayText + "</h5>";
                     }
                     
                 }

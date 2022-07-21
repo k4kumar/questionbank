@@ -120,7 +120,7 @@ namespace Quiz_Application.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ImportExcelFile(IFormFile FormFile)
+        public async Task<IActionResult> ImportExcelFile(Microsoft.AspNetCore.Http.IFormFile FormFile)
         {
             
             //get file name
